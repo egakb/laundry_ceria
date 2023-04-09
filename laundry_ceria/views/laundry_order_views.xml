@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="laundry_order_form_view" model="ir.ui.view">
+        <field name="name">laundry.order.form</field>
+        <field name="model">laundry.order</field>
+        <field name="arch" type="xml">
+            <form string="Laundry Order" class="o_sale_order">
+            	<header>
+            		<field name="state" widget="statusbar" statusbar_visible="draft,confirm,done,cancel"/>
+            	</header>
+               	<sheet>
+               		<div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                    	<group>
+                    		<field name="partner_id" required="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                    	<field name="partner_phone" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    	</group>
+                    	<group>
+                    		<field name="order_date" required="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+	                    	<field name="finish_date"/>
+	                    	<field name="user_id" required="1" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    	</group>
+                    </group>
+                    <notebook>
+                    	<page string="Order Lines">
+                    		<field name="laundry_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
+                                <tree string="Laundry Order Lines" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="laundry_total">
+                                <field name="total_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <field name="note" class="oe_inline" placeholder="Term and Condition"/>
+                            <div class="oe_clear"/>
+                    	</page>
+                    </notebook>
+               	</sheet>
+            </form>
+        </field>
+    </record>
+	<record id="laundry_order_tree_view" model="ir.ui.view">
+        <field name="name">laundry.order.tree</field>
+        <field name="model">laundry.order</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state == 'draft'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="order_date"/>
+                <field name="user_id"/>
+                <field name="total_amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+	<record id="action_laundry_order" model="ir.actions.act_window">
+		<field name="name">Laundry Order</field>
+		<field name="res_model">laundry.order</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[]</field>
+		<field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a New Order.
+            </p>
+        </field>
+	</record>
+	<menuitem name="Laundry Ceria" id="laundry_root_menu"/>
+    <menuitem id="laundry_order_menu" name="Laundry Order"
+              parent="laundry_root_menu"
+              action="action_laundry_order" sequence="1"/>
+    <menuitem id="laundry_product_menu" name="Products" 
+        action="account.product_product_action_sellable" 
+        parent="laundry_root_menu"
+        sequence="2"/>
+</odoo>

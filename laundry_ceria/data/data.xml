@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="sepatu_laundry_service" model="product.product">
+        <field name="name">Sepatu</field>
+        <field name="type">service</field>
+        <field name="default_code">[SRVSPT]</field>
+        <field name="list_price">10000</field>
+    </record>
+    <record id="karpet_laundry_service" model="product.product">
+        <field name="name">Karpet</field>
+        <field name="type">service</field>
+        <field name="default_code">[SRVK]</field>
+        <field name="list_price">25000</field>
+    </record>
+    <record id="selimut_laundry_service" model="product.product">
+        <field name="name">Selimut</field>
+        <field name="type">service</field>
+        <field name="default_code">[SRVSLMT]</field>
+        <field name="list_price">20000</field>
+    </record>
+</odoo>
